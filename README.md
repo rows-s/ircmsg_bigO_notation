@@ -41,3 +41,5 @@ But we expected that relative performance between the algorithms would not be ch
 	
 
 And that absolute time of the 2nd will increase about 6 times faster than of the 1st. 
+
+Run test/preformance.py 
