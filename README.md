@@ -1,7 +1,7 @@
 # ircmsg_o_notation
-Real example that O(n) does not work all the time.
+An example that O(n) does not work all the time on a real code.
 
-There are 2 realisation of raw irc messages parser:
+There are 2 realisations of raw irc messages parser:
 
 1: O(n) algorithm. Each character would be passed only once.
 	
