@@ -1,7 +1,9 @@
+import sys
+sys.path.append('..')
 from time import time
 from random import choices
-from src_On.ircmsgOn import IRCMsgOn
 from src.ircmsg import IRCMsg
+from src_On.ircmsgOn import IRCMsgOn
 
 
 class Constructor:
@@ -81,20 +83,22 @@ def create_msgs(count):
 def main(
         classes=(IRCMsg, IRCMsgOn),
         msgs=(empty, real_irc),
-        additional_msgs_count=50,
-        times=100,
+        count_to_generate=25,
+        times=1000,
         should_print_stat=True,
 ):
-    msgs = list(msgs) + create_msgs(additional_msgs_count)
+    msgs = list(msgs) + create_msgs(count_to_generate)
     stat = {_class: [] for _class in classes}
 
     for _class in classes:
-        for msg in msgs:
+        for i, msg in enumerate(msgs):
             t0 = time()
             for _ in range(times):
                 _ = _class(msg)
-            tx = time()-t0
             stat[_class].append(time()-t0)
+            print(f'{_class.__name__}: {i+1}/{len(msgs)} {time()-t0}')
+            sys.stdout.write("\033[F")  # back to previous line
+            sys.stdout.write("\033[K")  # clear line
 
     if should_print_stat:
         print_stat(stat, msgs, classes)
@@ -110,7 +114,7 @@ def print_stat(stat, msgs, classes):
             if _class is not first_class:
                 over_1st = round(stat[_class][i]/stat[first_class][i]*100 - 100)
                 over_1st = str(over_1st) if over_1st < 0 else f'+{over_1st}'
-                print(' (', over_1st, '% over the 1st)', sep='')
+                print(' (', over_1st, '% compared to the 1st)', sep='')
             else:
                 print()
         print()
@@ -120,6 +124,6 @@ if __name__ == '__main__':
     _print = lambda x: print('='*100, x, '='*100)
     _print('statistic')
     main()
-    _print('profiling')
+    # _print('profiling')
     # import cProfile
     # cProfile.run('main(should_print_stat=False)', sort='cumtime')
