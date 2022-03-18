@@ -1,5 +1,5 @@
 # ircmsg_o_notation
-Real example that O(n) does not work all the time.
+An example that O(n) does not work all the time on a real code.
 
 There are 2 realisation of raw irc messages parser:
 
